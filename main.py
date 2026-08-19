@@ -21,11 +21,11 @@ def main():
             "content":args.user_prompt
         }
     ]
-    chat_comp_obj = client.chat.completions.create(messages=messages,model="openrouter/free")
-    response_tkn = chat_comp_obj.usage.completion_tokens
+    chat_comp_obj = client.chat.completions.create(messages=messages,model="openrouter/free") # type: ignore
+    response_tkn = chat_comp_obj.usage.completion_tokens # pyright: ignore[reportOptionalMemberAccess]
     if response_tkn == 0:
         raise ValueError("faliled prompt")
-    prompt_tkn = chat_comp_obj.usage.prompt_tokens  
+    prompt_tkn = chat_comp_obj.usage.prompt_tokens   # pyright: ignore[reportOptionalMemberAccess]
     response = chat_comp_obj.choices[0].message.content
     metadata = f"User prompt: {messages[0].get("content")}\n Prompt tokens: {prompt_tkn}\n Response tokens: {response_tkn}\n "
     if args.verbose:
