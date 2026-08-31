@@ -1,5 +1,27 @@
 import os
-from config import MAX_CHARS
+
+
+
+schema_write_file = {
+    "type": "function",
+    "function": {
+        "name": "write_file",
+        "description": "writes the content(a string passed to the function) paramteter passed to a file located specfied by the file_path parameter  (writes to a path given as a function parameter)",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "file path to a file we want to write to",
+                },
+                "content":{
+                      "type":"string",
+                      "description":"content we want to write on the file"
+                }
+            },
+        },
+    },
+}
 
 def write_file(working_directory: str, file_path: str, content: str) -> str:
         try:
