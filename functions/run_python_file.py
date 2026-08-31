@@ -1,5 +1,28 @@
 import os
 import subprocess
+
+
+
+schema_run_python_file = {
+    "type": "function",
+    "function": {
+        "name": "run_python_file",
+        "description": "accepts a path and cmd argumens as paramters and runs python file that is located at that specfied path(has to be a python file)",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "file path to an executable python file",
+                },
+                "args":{
+                      "type":"list of string",
+                      "description":"cmd line arguments we give to the python run command (addtional flags )"
+                }
+            },
+        },
+    },
+}
 def run_python_file(working_directory: str, file_path: str, args: list[str] | None = None) -> str:
         try:
                 abs_wd_path = os.path.abspath(working_directory)
@@ -15,17 +38,18 @@ def run_python_file(working_directory: str, file_path: str, args: list[str] | No
                 command = ["python", abs_tr_path]
                 if args != None:
                       command.extend(args)
-                completed_process = subprocess.run(command,text=True,timeout=30);
+                completed_process = subprocess.run(command,text=True,timeout=30,capture_output=True);
                 ret_code = completed_process.returncode
                 std_err = completed_process.stderr
                 std_out = completed_process.stdout
+                print(f"std out: {std_out}")
                 content = ""
                 if ret_code != 0:
                       content += f'Process exited with code {ret_code}\n'
                 if std_err == "" and std_out == "":
                       content += f'No output produced\n'
-                content += f"STDOUT:{std_out}"
-                content += f"STDERR:{std_err}"
+                content += f"STDOUT:{std_out}\n"
+                content += f"STDERR:{std_err}\n"
                 return content
         except Exception as e:
             return f'Error:{e}'
