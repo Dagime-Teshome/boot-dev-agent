@@ -1,6 +1,24 @@
 import os
 from config import MAX_CHARS
 
+schema_get_file_content = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Display the contents of a file located at the path specfied by file_path parameter",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "path to the file we want to see the content of.",
+                },
+            },
+        },
+    },
+}
+
+
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:
            abs_wd_path = os.path.abspath(working_directory)
