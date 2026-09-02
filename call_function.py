@@ -27,7 +27,7 @@ def call_function(tool_call, verbose: bool = False) -> dict:
     if verbose:
         print(f" - Calling function: {function_name}({function_args})")
     else:
-        print(f" - Calling function: {function_name}")
+        print(f" - Calling function: {function_name}\n")
 
     if function_name not in function_map:
         return {
